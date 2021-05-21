@@ -212,3 +212,24 @@ class BiBarRotateLineBreak {
         this.curr.startUpdating(cb)
     }
 }
+
+class Renderer {
+
+    bbrl : BiBarRotateLineBreak = new BiBarRotateLineBreak()
+    animator : Animator = new Animator()
+    
+    render(context : CanvasRenderingContext2D) {
+        this.bbrl.draw(context)
+    }
+
+    handleTap(cb : Function) {
+        this.bbrl.startUpdating(() => {
+            this.animator.start(() => {
+                cb()
+                this.bbrl.update(() => {
+                    this.animator.stop()
+                })
+            })
+        })
+    }
+}
