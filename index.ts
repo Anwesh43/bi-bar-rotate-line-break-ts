@@ -39,7 +39,7 @@ class DrawingUtil {
         context.stroke()
     }
 
-    static drawBiBarRotateLine(context : CanvasRenderingContext2D, scale : number) {
+    static drawBiBarRotateLine(context : CanvasRenderingContext2D, scale : number, sj : number) {
         const size : number = Math.min(w, h) / sizeFactor 
         const barW : number = Math.min(w, h) / barSizeFactor 
         const sf : number = ScaleUtil.sinify(scale)
@@ -50,14 +50,14 @@ class DrawingUtil {
         const lSize : number = size * 0.5 * sf1 
         context.save()
         context.translate(w / 2, h / 2)
-        context.rotate(sf3 * Math.PI / 2)
+        context.rotate(sj * sf3 * Math.PI / 2)
         DrawingUtil.drawLine(context, -lSize, 0, lSize, 0)
         context.save()
         context.translate(0, -(w / 2 - size) * sf4)
         for (var j = 0; j < 2; j++) {
             context.save()
             context.scale(1 - 2 * j, 1)
-            context.fillRect(size / 2 - barW / 2, -size * sf2, barW, size * sf2)
+            context.fillRect(size / 2 - barW, -size * sf2, barW, size * sf2)
             context.restore()
         }
         context.restore()
@@ -69,7 +69,7 @@ class DrawingUtil {
         context.lineWidth = Math.min(w, h) / strokeFactor 
         context.fillStyle = colors[i]
         context.strokeStyle = colors[i]
-        DrawingUtil.drawBiBarRotateLine(context, scale)
+        DrawingUtil.drawBiBarRotateLine(context, scale, 1 - 2 * (i % 2))
     }
 }
 
@@ -232,6 +232,7 @@ class Renderer {
                 cb()
                 this.bbrl.update(() => {
                     this.animator.stop()
+                    cb()
                 })
             })
         })
