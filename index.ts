@@ -170,7 +170,7 @@ class BBRLNode {
     }
 
     draw(context : CanvasRenderingContext2D) {
-        DrawingUtil.drawBiBarRotateLine(context, this.state.scale)
+        DrawingUtil.drawBRLNode(context, this.i, this.state.scale)
     }
 
     update(cb : Function) {
